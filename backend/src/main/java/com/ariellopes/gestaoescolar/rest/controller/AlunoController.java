@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,6 +28,7 @@ import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
 import com.ariellopes.gestaoescolar.rest.services.AlunoService;
+import com.ariellopes.gestaoescolar.rest.services.CursoService;
 
 @RestController
 @RequestMapping("api/constroler-escolar/alunos")
@@ -36,6 +36,9 @@ public class AlunoController {
 
 	@Autowired
 	private AlunoService alunoService;
+	
+	@Autowired
+	private CursoService cursoService;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -83,4 +86,13 @@ public class AlunoController {
 				publicacaoPage.getTotalElements());
 		return publicacaoModelPage;
 	}
+	
+	@GetMapping(value = "/calcula/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Double> calcularNota(@PathVariable Long id){
+		 Double obj = alunoService.calcularNota(id);
+		 return ResponseEntity.ok().body(obj);
+	} 
+	
+	
 }

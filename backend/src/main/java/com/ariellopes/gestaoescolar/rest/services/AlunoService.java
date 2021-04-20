@@ -19,5 +19,6 @@ public interface AlunoService {
 	
 	public Page<Aluno> buscarTodos (Pageable pageable);
 	
+	public Double calcularNota(Long id);
 	
 }

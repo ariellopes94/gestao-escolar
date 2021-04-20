@@ -2,8 +2,11 @@ package com.ariellopes.gestaoescolar.rest.model;
 
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.ariellopes.gestaoescolar.persistence.entity.DisciplinaNotaEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -27,4 +30,6 @@ public class Aluno {
 	private String email;
 
 	private String telefone;
+	
+	private List<DisciplinaNotaEntity> matricula = new ArrayList<>();
 }

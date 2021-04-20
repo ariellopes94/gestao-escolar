@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.ariellopes.gestaoescolar.exception.model.AlunoNaoEncontradoException;
 import com.ariellopes.gestaoescolar.persistence.entity.AlunoEntity;
+import com.ariellopes.gestaoescolar.persistence.entity.DisciplinaNotaEntity;
 import com.ariellopes.gestaoescolar.persistence.repository.AlunoRepository;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
+import com.ariellopes.gestaoescolar.rest.model.DisciplinaNota;
 import com.ariellopes.gestaoescolar.rest.model.modelMapper.AlunoModelMapper;
 import com.ariellopes.gestaoescolar.rest.services.AlunoService;
 
@@ -93,6 +95,29 @@ public class AlunoServiceImpl implements AlunoService {
 
 		obj.orElseThrow(() -> new AlunoNaoEncontradoException("Aluno não encontrado"));
 		return true;
+	}
+
+	@Override
+	public Double calcularNota(Long id) {
+		
+		Aluno aluno = buscarPorId(id);
+		
+		AlunoEntity alunoEntity = modelMapper.toEntity(aluno);
+		
+		Double numero = 0d;
+		
+		
+		System.out.println("=========================================");
+		
+		for(DisciplinaNotaEntity alunoNota: alunoEntity.getMatricula()) {
+			
+			System.out.println(aluno.getEmail());
+			numero +=  alunoNota.getNota();
+			System.out.print(alunoNota.getNota());
+			
+		}
+		
+		return numero /3;
 	}
 
 }

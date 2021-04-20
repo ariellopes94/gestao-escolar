@@ -35,6 +35,7 @@ public class AlunoModelMapper {
 		alunoEntity.setEmail(aluno.getEmail());
 		alunoEntity.setTelefone(aluno.getTelefone());
 		alunoEntity.setIdade(aluno.getIdade());
+		alunoEntity.setMatricula(aluno.getMatricula());
 		
 		return alunoEntity;
 	}
@@ -54,7 +55,9 @@ public class AlunoModelMapper {
 	public Aluno toAluno(AlunoEntity alunoEntity) {
 
 		Aluno aluno = new Aluno();
+		
 
+		aluno.setMatricula(alunoEntity.getMatricula());
 		aluno.setId(alunoEntity.getId());
 		aluno.setDataCadastro(alunoEntity.getDataCadastro());
 		aluno.setNome(alunoEntity.getNome());
