@@ -1,6 +1,10 @@
 package com.ariellopes.gestaoescolar.rest.model;
 
-import java.sql.Date;
+
+
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,11 +17,12 @@ public class Aluno {
 
 	private Long id;
 
-	private Date DataCadastro;
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	private Date dataCadastro;
 
 	private String nome;
 
-	private int idade;
+	private Integer idade;
 
 	private String email;
 

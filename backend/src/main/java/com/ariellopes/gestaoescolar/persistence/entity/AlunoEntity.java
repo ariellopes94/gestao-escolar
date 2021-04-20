@@ -1,7 +1,7 @@
-package com.ariellopes.gestaoescolar.persistence.domain.entity;
+package com.ariellopes.gestaoescolar.persistence.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +29,7 @@ public class AlunoEntity implements Serializable {
 	
 	private String nome;
 	
-	private int idade;
+	private Integer idade;
 	
 	private String email;
 	
