@@ -14,4 +14,5 @@ public class AlunoNaoEncontradoException extends RuntimeException{
 	public AlunoNaoEncontradoException(String mensagem, Throwable causa) {
 		super(mensagem, causa);
 	}
+	
 }

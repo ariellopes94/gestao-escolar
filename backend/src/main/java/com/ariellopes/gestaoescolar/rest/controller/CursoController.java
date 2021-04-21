@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,14 +23,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CalculoNotaFinalAlunoDto;
-import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CursoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaCursoDto;
-import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoCursoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
 import com.ariellopes.gestaoescolar.rest.model.Curso;
-import com.ariellopes.gestaoescolar.rest.services.AlunoService;
 import com.ariellopes.gestaoescolar.rest.services.CursoService;
 
 @RestController
@@ -81,5 +77,11 @@ public class CursoController {
 		return cursoModelPage;
 	}
 	
+	@GetMapping("/filtro/quantidade/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<CursoDto> matriculasNoCurso(@PathVariable Long id) {
+		CursoDto obj = cursoService.qtAlunoNoCursoAreaEspetifica(id);
+		return ResponseEntity.ok().body(obj);
+	}
 	
 }

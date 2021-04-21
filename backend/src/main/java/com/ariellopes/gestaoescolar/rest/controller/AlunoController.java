@@ -3,8 +3,6 @@ package com.ariellopes.gestaoescolar.rest.controller;
 import java.net.URI;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,12 +23,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.AlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CalculoNotaFinalAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
 import com.ariellopes.gestaoescolar.rest.services.AlunoService;
-import com.ariellopes.gestaoescolar.rest.services.CursoService;
 
 @RestController
 @RequestMapping("api/constroler-escolar/alunos")
@@ -38,12 +37,10 @@ public class AlunoController {
 	@Autowired
 	private AlunoService alunoService;
 	
-	@Autowired
-	private CursoService cursoService;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Aluno> criar(@Valid @RequestBody NovoAlunoDto novoAlunoDto) {
+	public ResponseEntity<Aluno> criar(@Validated @RequestBody NovoAlunoDto novoAlunoDto) {
 
 		Aluno aluno = alunoService.criar(novoAlunoDto);
 
@@ -57,7 +54,7 @@ public class AlunoController {
 	
 	@PutMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<Aluno> editar(@Valid @RequestBody EditaAlunoDto aluno , @PathVariable Long id){
+	public ResponseEntity<Aluno> editar(@Validated @RequestBody EditaAlunoDto aluno , @PathVariable Long id){
 	
 		alunoService.editar(aluno, id);
 		return ResponseEntity.noContent().build();
@@ -72,12 +69,13 @@ public class AlunoController {
 	
 	@GetMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Aluno> findById(@PathVariable Long id){
-		 Aluno obj = alunoService.buscarPorId(id);
+	public ResponseEntity<AlunoDto> findById(@PathVariable Long id){
+		 AlunoDto obj = alunoService.buscarPorIdPersonalizado(id);
 		 return ResponseEntity.ok().body(obj);
 	} 
 	
 	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
 	public Page<Aluno> buscarTodos(
 			@PageableDefault(size = 5, sort = "nome", direction = Direction.DESC) Pageable pageable) {
 		Page<Aluno> publicacaoPage = alunoService.buscarTodos(pageable);

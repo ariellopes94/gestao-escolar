@@ -11,21 +11,29 @@ import org.springframework.stereotype.Service;
 
 import com.ariellopes.gestaoescolar.exception.model.AlunoNaoEncontradoException;
 import com.ariellopes.gestaoescolar.persistence.entity.AlunoEntity;
+import com.ariellopes.gestaoescolar.persistence.entity.CursoEntity;
 import com.ariellopes.gestaoescolar.persistence.entity.DisciplinaNotaEntity;
 import com.ariellopes.gestaoescolar.persistence.repository.AlunoRepository;
+import com.ariellopes.gestaoescolar.persistence.repository.CursoRepository;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.AlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CalculoNotaFinalAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
+import com.ariellopes.gestaoescolar.rest.model.Curso;
 import com.ariellopes.gestaoescolar.rest.model.DisciplinaNota;
 import com.ariellopes.gestaoescolar.rest.model.modelMapper.AlunoModelMapper;
 import com.ariellopes.gestaoescolar.rest.services.AlunoService;
+import com.ariellopes.gestaoescolar.rest.services.CursoService;
 
 @Service
 public class AlunoServiceImpl implements AlunoService {
 
 	@Autowired
 	private AlunoRepository alunoRepository;
+	
+	@Autowired
+	private CursoService cursoService;
 
 	@Autowired
 	AlunoModelMapper modelMapper;
@@ -33,7 +41,9 @@ public class AlunoServiceImpl implements AlunoService {
 	@Override
 	@Transactional
 	public Aluno criar(NovoAlunoDto novoAlunoDto) {
-
+		
+		cursoService.buscarPorId(novoAlunoDto.getCurso_id());
+			
 		AlunoEntity alunoEntity = modelMapper.toEntity(novoAlunoDto);
 		alunoEntity = alunoRepository.save(alunoEntity);
 		Aluno aluno = modelMapper.toAluno(alunoEntity);
@@ -77,6 +87,22 @@ public class AlunoServiceImpl implements AlunoService {
 		return aluno;
 	}
 
+	
+	@Override
+	public AlunoDto buscarPorIdPersonalizado(Long id) {
+
+		verrificarExistencia(id);
+		
+		AlunoEntity alunoEntity = alunoRepository.findById(id).get();
+		
+		Curso curso = cursoService.buscarPorId(alunoEntity.getCursoId());
+		
+		AlunoDto aluno = modelMapper.toAlunoDto(alunoEntity, curso.getNome());
+
+		return aluno;
+	}
+
+	
 	@Override
 	public Page<Aluno> buscarTodos(Pageable pageable) {
 

@@ -16,9 +16,9 @@ import com.ariellopes.gestaoescolar.persistence.entity.DisciplinaEntity;
 import com.ariellopes.gestaoescolar.persistence.entity.DisciplinaNotaEntity;
 import com.ariellopes.gestaoescolar.persistence.repository.AlunoRepository;
 import com.ariellopes.gestaoescolar.persistence.repository.CursoRepository;
-import com.ariellopes.gestaoescolar.persistence.repository.DisciplinaNotaRepository;
 import com.ariellopes.gestaoescolar.persistence.repository.DisciplinaRepository;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
+import com.ariellopes.gestaoescolar.rest.services.AlunoService;
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner{
@@ -62,12 +62,17 @@ public class BackendApplication implements CommandLineRunner{
 		DisciplinaEntity disciplinaExata3 = new DisciplinaEntity(6l, "Trigonometria", cursoExatas);
 		
 		DisciplinaEntity disciplinaHumana1 = new DisciplinaEntity(7l, "Direto Civíl", cursoHumanas);
-		DisciplinaEntity disciplinaHumana2 = new DisciplinaEntity(9l, "Psicologia", cursoHumanas);
+		DisciplinaEntity disciplinaHumana2 = new DisciplinaEntity(8l, "Psicologia", cursoHumanas);
 		DisciplinaEntity disciplinaHumana3 = new DisciplinaEntity(9l, "Filosofia", cursoHumanas);
+		
+		DisciplinaEntity disciplinaExata4 = new DisciplinaEntity(10l, "Álgebra Linear.", cursoExatas);
+		DisciplinaEntity disciplinaExata5 = new DisciplinaEntity(11l, "Arquitetura de Computadores", cursoExatas);
+		DisciplinaEntity disciplinaExata6 = new DisciplinaEntity(12l, "Circuitos Digitais e Elétricos", cursoExatas);
 		
 		disciplinaRepository.saveAll(Arrays.asList(disciplinaBiologica1, disciplinaBiologica2, disciplinaBiologica3,
 													disciplinaExata1, disciplinaExata2, disciplinaExata3,
-													disciplinaHumana1, disciplinaHumana2, disciplinaHumana3));
+													disciplinaHumana1, disciplinaHumana2, disciplinaHumana3,
+													disciplinaExata4, disciplinaExata5, disciplinaExata6));
 		
 		
 		//ADICIONAR DISCIPLINA NOTA
@@ -83,22 +88,44 @@ public class BackendApplication implements CommandLineRunner{
 		DisciplinaNotaEntity disciplinaNota8 = new DisciplinaNotaEntity(8l, disciplinaHumana2, 6.5);
 		DisciplinaNotaEntity disciplinaNota9 = new DisciplinaNotaEntity(9l, disciplinaHumana3, 7d);
 		
+		DisciplinaNotaEntity disciplinaNota10 = new DisciplinaNotaEntity(10l, disciplinaExata4, 4d);
+		DisciplinaNotaEntity disciplinaNota11 = new DisciplinaNotaEntity(11l, disciplinaExata5, 8.5);
+		DisciplinaNotaEntity disciplinaNota12 = new DisciplinaNotaEntity(12l, disciplinaExata6, 5.5d);
+		
 		//ARRAY DE DISCIPLINA NOTA
 		List<DisciplinaNotaEntity> arrayCursoBiologica = new ArrayList<>();
 		arrayCursoBiologica.addAll(Arrays.asList(disciplinaNota1, disciplinaNota2, disciplinaNota3));
 		
-		List<DisciplinaNotaEntity> arrayCursoExata = new ArrayList<>();
-		arrayCursoExata.addAll(Arrays.asList(disciplinaNota4, disciplinaNota5, disciplinaNota6));
+		List<DisciplinaNotaEntity> arrayCursoExata1 = new ArrayList<>();
+		arrayCursoExata1.addAll(Arrays.asList(disciplinaNota4, disciplinaNota5, disciplinaNota6));
 		
 		List<DisciplinaNotaEntity> arrayCursoHumana = new ArrayList<>();
 		arrayCursoHumana.addAll(Arrays.asList(disciplinaNota7, disciplinaNota8, disciplinaNota9));
 		
-		//ADICIONAR ALUNO
-		AlunoEntity alunoBiologica = new AlunoEntity(1l, new Date(), "Jaqueline Alvez Peira", 25, "jaqueline.dev@gmail.com", "(67) 99155-8844", arrayCursoBiologica);
-		AlunoEntity alunoExata = new AlunoEntity(2l, new Date(), "Miguel Guedes Sobra", 30, "miguel.dev@gmail.com", "(67) 9224-8888", arrayCursoExata);
-		AlunoEntity alunoHumana = new AlunoEntity(3l, new Date(), "Chelsea Alcaide Vilante", 25, "chelsea.dev@gmail.com", "(67) 1111-2222", arrayCursoHumana);
+		List<DisciplinaNotaEntity> arrayCursoExata2 = new ArrayList<>();
+		arrayCursoExata2.addAll(Arrays.asList(disciplinaNota10, disciplinaNota11, disciplinaNota12));
 		
-		alunoRepository.saveAll(Arrays.asList(alunoBiologica, alunoExata, alunoHumana));
+		
+		//ADICIONAR ALUNO
+		AlunoEntity alunoBiologica = new AlunoEntity(1l, new Date(), "Jaqueline Alvez Peira", 25, "jaqueline.dev@gmail.com", "(67) 99155-8844", 1l, arrayCursoBiologica);
+		AlunoEntity alunoExata1 = new AlunoEntity(2l, new Date(), "Miguel Guedes Sobra", 30, "miguel.dev@gmail.com", "(67) 9224-8888", 2l, arrayCursoExata1);
+		AlunoEntity alunoHumana = new AlunoEntity(3l, new Date(), "Chelsea Alcaide Vilante", 25, "chelsea.dev@gmail.com", "(67) 1111-2222", 3l, arrayCursoHumana);
+		AlunoEntity alunoExata2 = new AlunoEntity(4l, new Date(), "Eleonor Perdigão Rios", 27, "eleonor.dev@gmail.com", "(67) 1111-2222", 2l, arrayCursoExata2);
+		
+		alunoRepository.saveAll(Arrays.asList(alunoBiologica, alunoExata1, alunoHumana, alunoExata2));
+		
+		
+		
+		
+		
+		
+		// 
+		
+	//	int cursos = alunoRepository.findMatriculados(3).size();
+		
+		
+	//	System.out.println(cursos);
+		
 	}
 
 }

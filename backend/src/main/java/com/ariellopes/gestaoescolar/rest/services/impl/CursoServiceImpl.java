@@ -12,11 +12,16 @@ import org.springframework.stereotype.Service;
 import com.ariellopes.gestaoescolar.exception.model.AlunoNaoEncontradoException;
 import com.ariellopes.gestaoescolar.exception.model.CursoNaoEncontradoException;
 import com.ariellopes.gestaoescolar.persistence.entity.CursoEntity;
+import com.ariellopes.gestaoescolar.persistence.repository.AlunoRepository;
 import com.ariellopes.gestaoescolar.persistence.repository.CursoRepository;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.AlunoDto;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CursoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaCursoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoCursoDto;
+import com.ariellopes.gestaoescolar.rest.model.Aluno;
 import com.ariellopes.gestaoescolar.rest.model.Curso;
 import com.ariellopes.gestaoescolar.rest.model.modelMapper.AlunoModelMapper;
+import com.ariellopes.gestaoescolar.rest.services.AlunoService;
 import com.ariellopes.gestaoescolar.rest.services.CursoService;
 
 @Service
@@ -26,7 +31,10 @@ public class CursoServiceImpl implements CursoService {
 	private CursoRepository cursoRepository;
 
 	@Autowired
-	AlunoModelMapper modelMapper;
+	private AlunoModelMapper modelMapper;
+	
+	@Autowired
+	private AlunoRepository alunoRepository;
 
 	@Override
 	@Transactional
@@ -44,7 +52,7 @@ public class CursoServiceImpl implements CursoService {
 	@Transactional
 	public Curso editar(EditaCursoDto editarCurso, Long id) {
 
-		Curso aluno = buscarPorId(id);
+		buscarPorId(id);
 
 		CursoEntity cursoEntity = modelMapper.toCurso(editarCurso);
 		cursoEntity.setId(id);
@@ -84,6 +92,16 @@ public class CursoServiceImpl implements CursoService {
 
 		obj.orElseThrow(() -> new CursoNaoEncontradoException("Curso não encontrado"));
 		return true;
+	}
+
+	@Override
+	public CursoDto qtAlunoNoCursoAreaEspetifica(Long id) {
+		
+		CursoDto cursoDto = modelMapper.toCursoDto(buscarPorId(id));
+		Integer cursoQuantidade = alunoRepository.findQuantidadeAlunoMatriculadoEmCadaCurso(Math.toIntExact(id)).size();
+		cursoDto.setQuantidadeAlunoMatriculado(cursoQuantidade);
+		
+		return cursoDto;
 	}
 
 }

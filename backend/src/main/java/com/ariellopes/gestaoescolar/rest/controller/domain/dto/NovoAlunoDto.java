@@ -31,4 +31,7 @@ public class NovoAlunoDto {
 	@NotBlank(message = "campo descricao nao pode ser vazio")
 	@NotNull(message = "campo descricao nao pode ser nulo")
 	private String telefone;
+	
+	@NotNull(message = "campo descricao nao pode ser nulo")
+	private Long curso_id;
 }

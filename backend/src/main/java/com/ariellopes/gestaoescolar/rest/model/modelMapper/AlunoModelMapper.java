@@ -6,14 +6,18 @@ import org.springframework.stereotype.Component;
 
 import com.ariellopes.gestaoescolar.persistence.entity.AlunoEntity;
 import com.ariellopes.gestaoescolar.persistence.entity.CursoEntity;
+import com.ariellopes.gestaoescolar.persistence.entity.DisciplinaEntity;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.AlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CalculoNotaFinalAlunoDto;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CursoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaCursoDto;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovaDisciplinaDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoCursoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
 import com.ariellopes.gestaoescolar.rest.model.Curso;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ariellopes.gestaoescolar.rest.model.Disciplina;
 
 @Component
 public class AlunoModelMapper {
@@ -26,6 +30,7 @@ public class AlunoModelMapper {
 		alunoEntity.setNome(novoAlunoDto.getNome());
 		alunoEntity.setEmail(novoAlunoDto.getEmail());
 		alunoEntity.setTelefone(novoAlunoDto.getTelefone());
+		alunoEntity.setCursoId(novoAlunoDto.getCurso_id());
 		alunoEntity.setIdade(novoAlunoDto.getIdade());
 		
 		return alunoEntity;
@@ -69,11 +74,30 @@ public class AlunoModelMapper {
 		aluno.setNome(alunoEntity.getNome());
 		aluno.setIdade(alunoEntity.getIdade());
 		aluno.setEmail(alunoEntity.getEmail());
+		aluno.setCurso_id(alunoEntity.getCursoId());
 		aluno.setTelefone(alunoEntity.getTelefone());
 		
 		
 		return aluno;
 	}
+	
+	public AlunoDto toAlunoDto(AlunoEntity alunoEntity, String nomeCurso) {
+
+		AlunoDto alunoDto = new AlunoDto();
+		
+
+		alunoDto.setMatricula(alunoEntity.getMatricula());
+		alunoDto.setId(alunoEntity.getId());
+		alunoDto.setDataCadastro(alunoEntity.getDataCadastro());
+		alunoDto.setNome(alunoEntity.getNome());
+		alunoDto.setIdade(alunoEntity.getIdade());
+		alunoDto.setEmail(alunoEntity.getEmail());
+		alunoDto.setTelefone(alunoEntity.getTelefone());
+		alunoDto.setCurso(nomeCurso);
+		
+		return alunoDto;
+	}
+	
 	
 	public CalculoNotaFinalAlunoDto toCalculoNotaFinal(AlunoEntity alunoEntity) {
 
@@ -126,5 +150,33 @@ public class AlunoModelMapper {
 		curso.setDescricaoCurso(cursoEntity.getDescricaoCurso());
 		
 		return curso;
+	}
+	
+	public CursoDto toCursoDto(Curso curso) {
+
+		CursoDto cursoDto = new CursoDto();
+		cursoDto.setId(curso.getId());
+		cursoDto.setNome(curso.getNome());
+		cursoDto.setDescricaoCurso(curso.getDescricaoCurso());
+		
+		return cursoDto;
+	}
+	
+	
+	public DisciplinaEntity toDisciplinaModel(NovaDisciplinaDto novaDisciplinaDto) {
+
+		DisciplinaEntity disciplinaEntity = new DisciplinaEntity();
+		disciplinaEntity.setNomeDisciplina(novaDisciplinaDto.getNomeDisciplina());
+		
+		return disciplinaEntity;
+		
+	}
+	
+	public Disciplina toDisciplina(DisciplinaEntity disciplinaEntity) {
+
+		Disciplina disciplina = new Disciplina();
+		disciplina.setNomeDaDisciplina(disciplinaEntity.getNomeDisciplina());
+		
+		return disciplina;
 	}
 }

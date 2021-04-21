@@ -1,7 +1,6 @@
-package com.ariellopes.gestaoescolar.rest.model;
+package com.ariellopes.gestaoescolar.rest.controller.domain.dto;
 
-
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +15,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Aluno {
+public class AlunoDto implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 
@@ -31,7 +31,7 @@ public class Aluno {
 
 	private String telefone;
 	
-	private Long curso_id;
+	private String curso;
 	
 	private List<DisciplinaNotaEntity> matricula = new ArrayList<>();
 }
