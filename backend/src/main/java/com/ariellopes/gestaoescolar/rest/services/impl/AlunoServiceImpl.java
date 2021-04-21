@@ -13,6 +13,7 @@ import com.ariellopes.gestaoescolar.exception.model.AlunoNaoEncontradoException;
 import com.ariellopes.gestaoescolar.persistence.entity.AlunoEntity;
 import com.ariellopes.gestaoescolar.persistence.entity.DisciplinaNotaEntity;
 import com.ariellopes.gestaoescolar.persistence.repository.AlunoRepository;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CalculoNotaFinalAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
@@ -98,26 +99,35 @@ public class AlunoServiceImpl implements AlunoService {
 	}
 
 	@Override
-	public Double calcularNota(Long id) {
+	public CalculoNotaFinalAlunoDto calcularNota(Long id) {
 		
 		Aluno aluno = buscarPorId(id);
 		
 		AlunoEntity alunoEntity = modelMapper.toEntity(aluno);
 		
-		Double numero = 0d;
-		
-		
-		System.out.println("=========================================");
+		Double notaTotal = 0d;
 		
 		for(DisciplinaNotaEntity alunoNota: alunoEntity.getMatricula()) {
-			
-			System.out.println(aluno.getEmail());
-			numero +=  alunoNota.getNota();
-			System.out.print(alunoNota.getNota());
-			
+			notaTotal +=  alunoNota.getNota();
 		}
 		
-		return numero /3;
+		CalculoNotaFinalAlunoDto calculoNotaFinalAlunoDto = new CalculoNotaFinalAlunoDto();
+		
+		calculoNotaFinalAlunoDto = modelMapper.toCalculoNotaFinal(alunoEntity);
+		 notaTotal = notaTotal / alunoEntity.getMatricula().size();
+		
+		 //notaTotal = (double) Math.round(notaTotal);
+		 
+		calculoNotaFinalAlunoDto.setNotaFinal(String.format("%.1f", notaTotal));
+		
+		if(notaTotal >= 7) {
+		
+			calculoNotaFinalAlunoDto.setSituacao("APROVADO");
+		}
+		else{
+			calculoNotaFinalAlunoDto.setSituacao("REPROVADO");
+		} 
+		return  calculoNotaFinalAlunoDto;
 	}
 
 }

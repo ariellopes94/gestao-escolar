@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CalculoNotaFinalAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
@@ -89,8 +90,8 @@ public class AlunoController {
 	
 	@GetMapping(value = "/calcula/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Double> calcularNota(@PathVariable Long id){
-		 Double obj = alunoService.calcularNota(id);
+	public ResponseEntity<CalculoNotaFinalAlunoDto> calcularNota(@PathVariable Long id){
+		 CalculoNotaFinalAlunoDto obj = alunoService.calcularNota(id);
 		 return ResponseEntity.ok().body(obj);
 	} 
 	

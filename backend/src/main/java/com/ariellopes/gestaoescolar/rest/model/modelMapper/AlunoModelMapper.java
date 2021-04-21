@@ -5,9 +5,11 @@ import java.util.Date;
 import org.springframework.stereotype.Component;
 
 import com.ariellopes.gestaoescolar.persistence.entity.AlunoEntity;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CalculoNotaFinalAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Component
 public class AlunoModelMapper {
@@ -67,5 +69,20 @@ public class AlunoModelMapper {
 		
 		
 		return aluno;
+	}
+	
+	public CalculoNotaFinalAlunoDto toCalculoNotaFinal(AlunoEntity alunoEntity) {
+
+		CalculoNotaFinalAlunoDto calculoNotaFinalAlunoDto = new CalculoNotaFinalAlunoDto();
+		
+
+		calculoNotaFinalAlunoDto.setId(alunoEntity.getId());
+		calculoNotaFinalAlunoDto.setDataCadastro(alunoEntity.getDataCadastro());
+		calculoNotaFinalAlunoDto.setNome(alunoEntity.getNome());
+		calculoNotaFinalAlunoDto.setIdade(alunoEntity.getIdade());
+		calculoNotaFinalAlunoDto.setEmail(alunoEntity.getEmail());
+		calculoNotaFinalAlunoDto.setTelefone(alunoEntity.getTelefone());
+		
+		return calculoNotaFinalAlunoDto;
 	}
 }
