@@ -5,10 +5,14 @@ import java.util.Date;
 import org.springframework.stereotype.Component;
 
 import com.ariellopes.gestaoescolar.persistence.entity.AlunoEntity;
+import com.ariellopes.gestaoescolar.persistence.entity.CursoEntity;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.CalculoNotaFinalAlunoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaAlunoDto;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.EditaCursoDto;
 import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoAlunoDto;
+import com.ariellopes.gestaoescolar.rest.controller.domain.dto.NovoCursoDto;
 import com.ariellopes.gestaoescolar.rest.model.Aluno;
+import com.ariellopes.gestaoescolar.rest.model.Curso;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Component
@@ -84,5 +88,43 @@ public class AlunoModelMapper {
 		calculoNotaFinalAlunoDto.setTelefone(alunoEntity.getTelefone());
 		
 		return calculoNotaFinalAlunoDto;
+	}
+	
+	public CursoEntity toEntityCursoEntity(NovoCursoDto novoCursoDto) {
+
+		CursoEntity cursoEntity = new CursoEntity();
+		cursoEntity.setNome(novoCursoDto.getNomeDoCurso());
+		cursoEntity.setDescricaoCurso(novoCursoDto.getDescicaoDoCurso());
+		
+		return cursoEntity;
+	}
+	
+	public Curso toEntityCurso(CursoEntity cursoEntity) {
+
+		Curso curso = new Curso();
+		curso.setNome(cursoEntity.getNome());
+		curso.setDescricaoCurso(cursoEntity.getDescricaoCurso());
+		
+		return curso;
+	}
+	
+	public CursoEntity toCurso(EditaCursoDto cursoDto) {
+
+		CursoEntity cursoEntity = new CursoEntity();
+		cursoEntity.setId(cursoDto.getId());
+		cursoEntity.setNome(cursoDto.getNome());
+		cursoEntity.setDescricaoCurso(cursoDto.getDescricaoCurso());
+		
+		return cursoEntity;
+	}
+	
+	public Curso toCurso(CursoEntity cursoEntity) {
+
+		Curso curso = new Curso();
+		curso.setId(cursoEntity.getId());
+		curso.setNome(cursoEntity.getNome());
+		curso.setDescricaoCurso(cursoEntity.getDescricaoCurso());
+		
+		return curso;
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.ariellopes.gestaoescolar.exception.handler.validation.StandardError;
 import com.ariellopes.gestaoescolar.exception.handler.validation.ValidationError;
 import com.ariellopes.gestaoescolar.exception.model.AlunoNaoEncontradoException;
+import com.ariellopes.gestaoescolar.exception.model.CursoNaoEncontradoException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -46,7 +47,22 @@ public class ResourceExceptionHandler {
 		
 		erro.setTimestamp(System.currentTimeMillis());
 		erro.setStatus(404);
-		erro.setError("Não encontrado");
+		erro.setError("Aluno Não encontrado");
+		erro.setMessage(e.getMessage());
+		erro.setPath(request.getRequestURI());
+		erro.setMensagemDesenvolvedor("http://erros.sistemapedidos.com/404");
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+	}
+	
+	@ExceptionHandler(CursoNaoEncontradoException.class)
+	public ResponseEntity<StandardError> handlerObjectNotFoundException(CursoNaoEncontradoException e,
+			                                                            HttpServletRequest request){
+		StandardError erro = new StandardError();
+		
+		erro.setTimestamp(System.currentTimeMillis());
+		erro.setStatus(404);
+		erro.setError("Curso Não encontrado");
 		erro.setMessage(e.getMessage());
 		erro.setPath(request.getRequestURI());
 		erro.setMensagemDesenvolvedor("http://erros.sistemapedidos.com/404");
