@@ -3,7 +3,7 @@
 
 # Sobre o projeto
 
-Sistema Escolar é uma API desenvolvida em Java e Spring Boot, construída para um  **Desafio de Pogramação**.
+Sistema Escolar é uma API desenvolvida em Java e Spring Boot, construída para um  **Desafio de Programação**.
 
 
 A pedagoga e empresária Paola Bucharelli está com novos planos de investimentos e
