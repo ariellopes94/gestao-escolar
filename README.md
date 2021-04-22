@@ -57,7 +57,7 @@ cd backend
 # executar o projeto
 ./mvnw spring-boot:run
 ```
-As dependências necessecarias do projeto serão baixada automaticamente,
+As dependências necessárias do projeto serão baixada automaticamente,
 o banco de dados em memoria H2, já esta configurado.
 
 
