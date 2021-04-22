@@ -34,7 +34,7 @@ public class ResourceExceptionHandler {
 		erro.setError("Erro de Validação");
 		erro.setMessage(e.getMessage());
 		erro.setPath(request.getRequestURI());
-		erro.setMensagemDesenvolvedor("http://erros.sistemapedidos.com/422");
+		erro.setMensagemDesenvolvedor("http://erros.sistemagestaoescolar.com/422");
 		
 		
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(erro);
@@ -50,7 +50,7 @@ public class ResourceExceptionHandler {
 		erro.setError("Aluno Não encontrado");
 		erro.setMessage(e.getMessage());
 		erro.setPath(request.getRequestURI());
-		erro.setMensagemDesenvolvedor("http://erros.sistemapedidos.com/404");
+		erro.setMensagemDesenvolvedor("http://erros.sistemagestaoescolar.com/404");
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}
@@ -65,7 +65,7 @@ public class ResourceExceptionHandler {
 		erro.setError("Curso Não encontrado");
 		erro.setMessage(e.getMessage());
 		erro.setPath(request.getRequestURI());
-		erro.setMensagemDesenvolvedor("http://erros.sistemapedidos.com/404");
+		erro.setMensagemDesenvolvedor("http://erros.sistemagestaoescolar.com/404");
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}

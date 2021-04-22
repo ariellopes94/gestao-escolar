@@ -86,7 +86,7 @@ public class AlunoController {
 		return publicacaoModelPage;
 	}
 	
-	@GetMapping(value = "/calcula/{id}")
+	@GetMapping(value = "/calcular-nota/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<CalculoNotaFinalAlunoDto> calcularNota(@PathVariable Long id){
 		 CalculoNotaFinalAlunoDto obj = alunoService.calcularNota(id);

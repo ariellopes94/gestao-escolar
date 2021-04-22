@@ -77,7 +77,7 @@ public class CursoController {
 		return cursoModelPage;
 	}
 	
-	@GetMapping("/filtro/quantidade/{id}")
+	@GetMapping("/filtro/quantidade-matriculas-por-curso/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<CursoDto> matriculasNoCurso(@PathVariable Long id) {
 		CursoDto obj = cursoService.qtAlunoNoCursoAreaEspetifica(id);
